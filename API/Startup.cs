@@ -38,6 +38,7 @@ namespace API
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebAPIv5", Version = "v1" });
             });
+            services.AddCors();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -52,7 +53,12 @@ namespace API
 
             app.UseHttpsRedirection();
 
+            /*Cors should be in between routing and authorization*/
             app.UseRouting();
+
+            //x = policy
+            //allow any header and methods.
+            app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:4200"));
 
             app.UseAuthorization();
 
